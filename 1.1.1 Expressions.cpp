@@ -15,12 +15,7 @@ void print( V v )
 }
 
 int main()
-{
-  using std::plus;
-  using std::minus;
-  using std::multiplies;
-  using std::divides;
-  
+{  
   using boost::fusion::fold;
   using boost::fusion::make_list;
   
