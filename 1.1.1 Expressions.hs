@@ -1,4 +1,4 @@
--- sicp.1.1.1 Expressions
+-- sicp.1.1.1 expressions
 
 main = do
     print 486   -- 486
