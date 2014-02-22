@@ -1,4 +1,4 @@
-// sicp.1.1.4 Compound Procedures
+// sicp.1.1.5 The Substitution Model for Procedure Application
 
 #include <iostream>
 #include <functional>
@@ -31,11 +31,7 @@ int main()
   //        (sum-of-squares (+ a 1) (* a 2)))
   auto f = 
             sum_of_squares(arg1 + 1, arg1 *2);
- 
-  print (square(21));       //  (square 21)
-  print (square(2+5));      //  (square (+ 2 5))
-  print (square(square(3)));//  (square (square 3))
-  print (sum_of_squares(3,4)); // (sum-of-squares 3 4)
+
   print (f(5)); // (f 5)
 
 }
