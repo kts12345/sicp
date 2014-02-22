@@ -1,4 +1,4 @@
-// sicp.1.1.1 expressions
+// sicp.1.1.2 Naming and the Environments
 
 #include <iostream>
 #include <functional>

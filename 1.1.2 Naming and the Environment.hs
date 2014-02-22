@@ -1,3 +1,5 @@
+-- sicp.1.1.2 Naming and the Environment
+
 import Prelude hiding(pi)
 
 size = 2      -- (define size 2)
