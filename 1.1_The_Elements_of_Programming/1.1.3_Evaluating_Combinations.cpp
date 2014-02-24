@@ -1,29 +1,28 @@
 // sicp.1.1.3 Evaluating Combinations
 
-#include <iostream>
-#include <functional>
+#include <iostream>                        // cout, endl, << 
+#include <boost/phoenix.hpp>               // arg1, arg2, +, *
+#include <boost/fusion/container.hpp>      // make_list
+#include <boost/fusion/algorithm.hpp>      // fold
+  
+using namespace boost::phoenix::arg_names; // arg1, arg2, +, *
+using namespace boost::fusion;             // make_list, fold
 
-#include <boost/fusion/container.hpp>
-#include <boost/fusion/algorithm.hpp>
+//-----------------------------------------------------------------------------
 
-template <typename V>
-void print( V v )
-{
-  using std::cout;
-  using std::endl;
-  cout << v << endl;
-}
+template<typename T0, typename... TN>
+auto add (T0 t0, TN... tn) { return fold(make_list(tn...), t0, arg1 + arg2); }
+
+auto mul = arg1 * arg2;
+
+auto print = [](auto v) {  std::cout << v << std::endl; };
+
+//------------------------------------------------------------------------------
 
 int main()
-{
-  using boost::fusion::fold;
-  using boost::fusion::make_list;
-
-  const auto plus_i   = std::plus<int>();
-  const auto mul_i   = std::multiplies<int>();
- 
-  // (* (+ 2 (* 4 6))
-  //    (+ 3 5 7)) 
-  print (mul_i (plus_i (2, (mul_i (4, 6))),
-                fold(make_list(3,5,7), 0, plus_i))); 
+{ 
+  //    (*   (+ 2 (* 4 6))
+  //         (+ 3 5 7)) 
+  print (mul (add (2, mul (4, 6)),
+              add (3, 5, 7))); 
 }

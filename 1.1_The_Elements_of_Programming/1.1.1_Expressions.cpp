@@ -1,45 +1,57 @@
 // sicp.1.1.1 Expressions
 
-
-#include <iostream>
-#include <functional>
-
-#include <boost/phoenix.hpp>
-
-#include <boost/fusion/container.hpp>
-#include <boost/fusion/algorithm.hpp>
-
-//-------------------------------------------------
-template <typename V>
-void print( V v ) { std::cout << v << std::endl; }
-
-//-------------------------------------------------
-int main()
-{  
-  using boost::fusion::fold;
-  using boost::fusion::make_list;
+#include <iostream>                        // cout, endl, << 
+#include <boost/phoenix.hpp>               // arg1, arg2, +, -, *, /
+#include <boost/fusion/container.hpp>      // make_list
+#include <boost/fusion/algorithm.hpp>      // fold
   
-  using boost::phoenix::arg_names::arg1;
-  using boost::phoenix::arg_names::arg2;
+using namespace boost::phoenix::arg_names; // for arg1, arg2, +, -, *, /
+using namespace boost::fusion;             // for make_list, fold
 
-  //------------------------------------------------- 
- 
-  auto add = arg1 + arg2;
+//-----------------------------------------------------------------------------
+
+template<typename T0, typename... TN>
+auto add (T0 t0, TN... tn) { return fold(make_list(tn...), t0, arg1 + arg2); }
+  
+template<typename T0, typename... TN>
+auto mul (T0 t0, TN... tn) { return fold(make_list(tn...), t0, arg1 * arg2); }
+  
+auto print = [](auto v) {  std::cout << v << std::endl; };
+
+//------------------------------------------------------------------------------
+
+int main()
+{ 
   auto sub = arg1 - arg2;
-  auto mul = arg1 * arg2;
   auto div = arg1 / arg2;
 
-  //-------------------------------------------------
+  //     486
+  print (486);                   
 
-  print (486);        // 486
-  print (add (137, 349));  // (+ 137 349)
-  print (sub (1000, 334)); // (- 1000 334)
-  print (mul (5, 99));     // (* 5 99)
-  print (div (10, 5));     // (/ 10 5)
-  print (add (2.7, 10));   // (+ 2.7 10)
-  print (fold(make_list(21, 35, 12, 7), 0, add));   // (+ 21 35 12 7)
-  print (fold(make_list(25, 4, 12), 1, mul));       // (* 25 4 12)
-  print (add (mul (3,5), sub (10, 6)));             // (+ (* 3 5) (- 10 6))
-  print (add (mul (3, add (mul (2, 4), add (3, 5))), add (sub (10, 7), 6))); // (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
+  //    (+ 137 349)
+  print (add (137, 349));        
+
+  //    (- 1000 334)
+  print (sub (1000, 334));       
+
+  //    (* 5 99)
+  print (mul (5, 99));           
+
+  //    (/ 10 5)
+  print (div (10, 5));           
+
+  //    (+ 2.7 10)
+  print (add (2.7, 10));         
+
+  //    (+ 21 35 12 7)
+  print (add (21, 35, 12, 7));   
+
+  //    (* 25 4 12)
+  print (mul (25, 4, 12));       
+
+  //    (+ (* 3 5) (- 10 6))
+  print (add (mul (3,5), sub (10, 6)));                                      
+
+  //    (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
+  print (add (mul (3, add (mul (2, 4), add (3, 5))), add (sub (10, 7), 6)));
 }
-

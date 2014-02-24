@@ -1,34 +1,43 @@
 // sicp.1.1.2 Naming and the Environments
 
-#include <iostream>
-#include <functional>
+#include <iostream>                        // cout, endl, << 
+#include <boost/phoenix.hpp>               // arg1, arg2, *
+#include <boost/fusion/container.hpp>      // make_list
+#include <boost/fusion/algorithm.hpp>      // fold
+  
+using namespace boost::phoenix::arg_names; // arg1, arg2, *
+using namespace boost::fusion;             // make_list, fold
 
-#include <boost/fusion/container.hpp>
-#include <boost/fusion/algorithm.hpp>
 
-template <typename V>
-void print( V v )
-{
-  using std::cout;
-  using std::endl;
-  cout << v << endl;
-}
+template<typename T0, typename... TN>
+auto mul (T0 t0, TN... tn) { return fold(make_list(tn...), t0, arg1 * arg2); }
+
+auto print = [](auto v) {  std::cout << v << std::endl; };
+
 
 int main()
-{
-  using boost::fusion::fold;
-  using boost::fusion::make_list;
-
-  const auto mul_f   = std::multiplies<float>();
-  const auto mul_i   = std::multiplies<int>();
+{  
+  // (define size 2)
+  auto size = 2;  
   
-  auto size = 2;      // (define size 2)
-  auto pi = 3.14159;  // (define pi 3.14159)
-  auto radius = 10;   // (define radius 10)
-  auto circumference = fold(make_list(2, pi, radius), 1, mul_f); // (define circumference (* 2 pi radius))
+  // (define pi 3.14159)
+  auto pi = 3.14159; 
+  
+  // (define radius 10)
+  auto radius = 10;   
+  
+  // (define circumference (* 2 pi radius))
+  auto circumference = mul (2, pi, radius); 
 
-  print (size);            // size
-  print (mul_i (5, size)); // (* 5 size)
-  print (mul_f (pi, mul_i (radius, radius))); // (* pi (* radius radius))
-  print (circumference);   // circumference
+  //     size
+  print (size); 
+  
+  //    (* 5 size)
+  print (mul (5, size)); 
+  
+  //    (* pi (* radius radius))
+  print (mul (pi, mul (radius, radius))); 
+  
+  // circumference
+  print (circumference);   
 }
