@@ -42,4 +42,15 @@ square (sqrt-iter 1  10000000000))
 ; infinite-loop                   ; Not Ok
 ;
 
-
+;------------------------------------------------------------
+; * Answer
+; if x is very very small
+; y_next = (y + x/y)/2 
+;        = y/2  + x/2y
+;        ~ y/2 
+; y1 = 1/2, y2 = 1/2^2, y3 = 1/2^3, ...  , yn = 1/2^n, 
+; if y/y^2n < 0.001 stop. but  |y^2n - x| is very large in comparison to x.
+;
+; if x is very very large
+; range (yn^2, x) is empty
+; so range ((yn+1)^2, x) is also empty 
