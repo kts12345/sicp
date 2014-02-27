@@ -28,12 +28,12 @@ main = do
 
 -- a_plus_abs_b                    10 (-4)
 -- (if (-4) > 0 then (+) else (-)) 10 (-4)
--- (if (False)  then (+) else (-)) 10 (-4)
+-- (if False    then (+) else (-)) 10 (-4)
 --                            (-)  10 (-4)
 --                            14
 
--- a_plus_abs_b                   10 4
--- (if (4) > 0 then (+) else (-)) 10 4
--- (if (True)  then (+) else (-)) 10 4
---                  (+)           10 4
---                  14
+-- a_plus_abs_b                    10 4
+-- (if 4 > 0    then (+) else (-)) 10 4
+-- (if True     then (+) else (-)) 10 4
+--                   (+)           10 4
+--                   14
