@@ -36,7 +36,7 @@ N fact_iter(N product, N counter, N max_count)
 template < typename N >
 N factorial(N n)
 {
-    return fact_iter (1, 1, n);
+    return fact_iter (N(1), N(1), n);
 }
 
 int main ()
