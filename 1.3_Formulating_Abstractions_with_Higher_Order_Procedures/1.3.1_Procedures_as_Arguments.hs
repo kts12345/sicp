@@ -45,7 +45,7 @@ sum2 term a next b = sum $ map term $ takeWhile (not.(<) b) $ iterate next a
 -- (define (sum-cubes a b)
 --   (sum cube a inc b))
 -- inc n = n + 1
-inc = (+) 1
+inc = succ
 sum_cubes2 a b = sum2 cube a inc b
 
 -- (define (identity x) x)
