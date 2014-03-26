@@ -30,17 +30,17 @@ identity x = x
 sum_integers2 a b = sum2 identity a inc b
 
 pi_sum2 a b = sum2 pi_term a pi_next b
-	where
-		pi_term x = 1.0 / (x * (x + 2))
-		pi_next x = x + 4
+  where
+    pi_term x = 1.0 / (x * (x + 2))
+    pi_next x = x + 4
 
 integral f a b dx = dx * sum2 f (a + (dx / 2.0)) add_dx b
-	where
-		add_dx = (+) dx
+  where
+    add_dx = (+) dx
 
 main = do
-	print $ sum_cubes2 1 10
-	print $ sum_integers2 1 10
-	print $ 8 * pi_sum2 1 1000
-	print $ integral cube 0 1 0.01
-	print $ integral cube 0 1 0.001
+  print $ sum_cubes2 1 10
+  print $ sum_integers2 1 10
+  print $ 8 * pi_sum2 1 1000
+  print $ integral cube 0 1 0.01
+  print $ integral cube 0 1 0.001

@@ -9,8 +9,8 @@ identity x = x
 --       (+ (term a)
 --          (product term (next a) next b))))
 -- product term a next b =
--- 		if a > b then 0 
--- 		else term a + product term (next a) next b
+--     if a > b then 0 
+--     else term a + product term (next a) next b
 -- aprox_pi :: (Integral a, Num b) => (a -> b) -> a -> (a -> a) -> a -> b
 product2 term a next b = 
   product $ map term $ takeWhile (not.(<) b) $ iterate next a
@@ -33,13 +33,13 @@ approx_pi n =
            | otherwise = fromIntegral (n + 1) / fromIntegral (n + 2)
 
 main = do
-	print $ factorial 1
-	print $ factorial 2
-	print $ factorial 4
-	print $ factorial 8
-	print $ factorial_iter 1
-	print $ factorial_iter 2
-	print $ factorial_iter 4
-	print $ factorial_iter 8
-	print $ approx_pi 100
-	print $ approx_pi 1000
+  print $ factorial 1
+  print $ factorial 2
+  print $ factorial 4
+  print $ factorial 8
+  print $ factorial_iter 1
+  print $ factorial_iter 2
+  print $ factorial_iter 4
+  print $ factorial_iter 8
+  print $ approx_pi 100
+  print $ approx_pi 1000

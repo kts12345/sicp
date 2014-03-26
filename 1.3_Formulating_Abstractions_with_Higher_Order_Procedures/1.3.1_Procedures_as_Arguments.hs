@@ -8,14 +8,14 @@ cube x = x * x * x
 --       0
 --       (+ a (sum-integers (+ a 1) b))))
 sum_integers a b = if a > b then 0
-									 else a + sum_integers (a + 1) b
+                   else a + sum_integers (a + 1) b
 
 -- (define (sum-cubes a b)
 --   (if (> a b)
 --       0
 --       (+ (cube a) (sum-cubes (+ a 1) b))))
 sum_cubes a b = if a > b then 0
-							  else cube a + sum_cubes (a + 1) b
+                else cube a + sum_cubes (a + 1) b
 
 
 -- (define (pi-sum a b)
@@ -23,7 +23,7 @@ sum_cubes a b = if a > b then 0
 --       0
 --       (+ (/ 1.0 (* a (+ a 2))) (pi-sum (+ a 4) b))))
 pi_sum a b = if a > b then 0
-						 else (1.0 / (a * (a + 2))) + (pi_sum (a + 4) b)
+             else (1.0 / (a * (a + 2))) + (pi_sum (a + 4) b)
 
 -- (define (<name> a b)
 --   (if (> a b)
@@ -37,8 +37,8 @@ pi_sum a b = if a > b then 0
 --       (+ (term a)
 --          (sum term (next a) next b))))
 -- sum term a next b =
--- 		if a > b then 0 
--- 		else term a + sum term (next a) next b
+--     if a > b then 0 
+--     else term a + sum term (next a) next b
 sum2 term a next b = sum $ map term $ takeWhile (not.(<) b) $ iterate next a
 
 -- (define (inc n) (+ n 1))
@@ -62,17 +62,17 @@ sum_integers2 a b = sum2 identity a inc b
 --     (+ x 4))
 --   (sum pi-term a pi-next b))
 pi_sum2 a b = sum2 pi_term a pi_next b
-	where
-		pi_term x = 1.0 / (x * (x + 2))
-		pi_next x = x + 4
+  where
+    pi_term x = 1.0 / (x * (x + 2))
+    pi_next x = x + 4
 
 -- (define (integral f a b dx)
 --   (define (add-dx x) (+ x dx))
--- 	 (* (sum f (+ a (/ dx 2.0)) add-dx b)
--- 		  dx))
+--    (* (sum f (+ a (/ dx 2.0)) add-dx b)
+--       dx))
 integral f a b dx = dx * sum2 f (a + (dx / 2.0)) add_dx b
-	where
-		add_dx = (+) dx
+  where
+    add_dx = (+) dx
 
 -- (sum-cubes 1 10)
 -- 3025
@@ -91,11 +91,11 @@ integral f a b dx = dx * sum2 f (a + (dx / 2.0)) add_dx b
 
 
 main = do
-	print $ sum_cubes 1 10
-	print $ sum_cubes2 1 10
-	print $ sum_integers 1 10
-	print $ sum_integers2 1 10
-	print $ 8 * pi_sum 1 1000
-	print $ 8 * pi_sum2 1 1000
-	print $ integral cube 0 1 0.01
-	print $ integral cube 0 1 0.001
+  print $ sum_cubes 1 10
+  print $ sum_cubes2 1 10
+  print $ sum_integers 1 10
+  print $ sum_integers2 1 10
+  print $ 8 * pi_sum 1 1000
+  print $ 8 * pi_sum2 1 1000
+  print $ integral cube 0 1 0.01
+  print $ integral cube 0 1 0.001
