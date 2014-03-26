@@ -1,22 +1,20 @@
-; (define (* a b)
-;   (if (= b 0)
-; 	0
-; 	(+ a (* a (- b 1)))))
+(define (fin n)
+  (fib-iter 1 0 0 1 n))
 
-(define (double a)
-  (+ a a))
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+		((even? count)
+		 (fib-iter a
+				   b
+				   p2 ; ???
+				   q2 ; ???
+				   (/ count 2)))
+		(else (fib-iter (+ (* b q) (* a q) (* a p))
+						(+ (* b q) (* a q))
+						p
+						q
+						(- count 1)))))
 
-(define (halve a)
-  (/ a 2))
 
-(define (multiply a b)
-  (multiply-iter (a b 0))
-
-(define (multiply-iter a b k)
-  (cond ((= a 0) k)
-		((= b 0) k)
-		((= b 1) k)
-		((even? b) (multiply-iter (double a) (halve b) k))
-		(else (multiply-iter (double a) (halve b) (+ k a)))))
 
 
