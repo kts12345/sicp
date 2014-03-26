@@ -22,7 +22,7 @@ sum2 term a next b =
     iter term a next b sum | a > b = sum
                            | otherwise = iter term (next a) next b (sum + term a)
 
-inc = (+) 1
+inc = succ
 sum_cubes2 a b = sum2 cube a inc b
 
 identity x = x
