@@ -9,7 +9,7 @@ p x = (3 * x) - (4 * cube x)
 --        angle
 --        (p (sine (/ angle 3.0)))))
 sine angle = if not $ abs angle > 0.1 then angle
-             else p $ sine (angle / 3.1)
+             else p $ sine (angle / 3.0)
 
 -- a.  How many times is the procedure p applied when (sine 12.15) is evaluated?
 -- sine 12.15
