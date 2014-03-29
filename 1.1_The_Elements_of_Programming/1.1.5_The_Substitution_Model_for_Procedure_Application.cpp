@@ -1,4 +1,4 @@
-// sicp.1.1.4 Compound Procedures
+// sicp.1.1.5_The_Substitution_Model_for_Procedure_Application
 
 #include <iostream>                        // cout, endl, << 
 #include <boost/phoenix.hpp>               // arg1, arg2, +, *
