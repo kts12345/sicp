@@ -1,7 +1,8 @@
 
 
+#include <cmath>                           // isless, isgrate, sin, cos
+#include <cstdlib>                         // abs
 #include <iostream>                        // cout, endl, << 
-#include <cmath>                           // isless, isgrate, sin
 #include <boost/phoenix.hpp>               // _1, _2, *, 
 using namespace boost::phoenix::arg_names; // _1, _2, *, 
 
@@ -78,16 +79,94 @@ auto val_3_14 = half_interval_method<double(double)>(std::sin, 2.0, 4.0);
 // 1.89306640625
 auto val_1_89 = half_interval_method((_1*_1*_1) - (2 * _1) - 3, 1.0, 2.0);
 
+
+//-------------------------------------------------------------
+//(define tolerance 0.00001)
+//(define (fixed-point f first-guess)
+//  (define (close-enough? v1 v2)
+//    (< (abs (- v1 v2))
+//       tolerance))
+//  (define (try guess)
+//    (let ((next (f guess)))
+//      (if (close-enough? guess next)
+//          next
+//          (try next))))
+//  (try first-guess))
+//
+auto tolerance = 0.00001;
+template <typename Func, typename Num>
+auto fixed_point(Func f, Num first_guess)
+{
+  auto is_close_enough = [](auto v1, auto v2)
+  { 
+    return std::abs(v1 - v2) < tolerance; 
+  };
+
+  auto try_f = [](auto f, auto try_f, auto guess)
+  {
+    auto next = f(guess);
+    if (is_close_enough(guess, next)) return next;
+    else                              return try_f(f, try_f, next);
+  };
+
+  return try_f(f, try_f, first_guess);
+};
+
+//-------------------------------------------------------------
+// (fixed - point cos 1.0)
+// .7390822985224023
+// 
+auto val_0_73 = fixed_point<double(double)>(std::cos, 1.0);
+
+//-------------------------------------------------------------
+// (fixed - point(lambda(y) (+(sin y) (cos y))) 1.0)
+// 1.2587315962971173
+auto val_1_25 = fixed_point<double(double)>([](auto y) { return std::sin(y) + std::cos(y)}, 1.0);
+
+//-------------------------------------------------------------
+//(define(sqrt x)
+//  (fixed - point(lambda(y) (/ x y)) 1.0))
+//
+template <typename Num>
+auto sqrt_1(Num x)
+{
+  auto lambda = [x](Num y) { return x / y; };
+  return fixed_point(lambda, 1.0);
+};
+//auto val_infinite = sqrt_1(2.0);
+
+//-------------------------------------------------------------
+//(define(sqrt x)
+//  (fixed - point(lambda(y) (average y(/ x y))) 1.0))
+// infinte roop
+//
+template <typename Num>
+auto sqrt_2(Num x)
+{
+  auto lambda = [x](Num y) { return average(y, x / y); };
+  return fixed_point(lambda, 1.0);
+};
+auto val_1_41 = sqrt_2(2.0);
+
+
 int main()
 {
   auto print = [](auto v) { std::cout << v << std::endl; };
   print(val_3_14);
   print(val_1_89);
+  print(val_0_73);
+  print(val_1_25);
+  print(val_1_41);
+  //print(val_infinite);
 
+  return 0;
 }
 
 //-------------------------------------------------------------
 // output
 //
 // 3.14111
-// 1.89307 
+// 1.89307
+// 0.73876
+// 1.259
+// 1.41421
