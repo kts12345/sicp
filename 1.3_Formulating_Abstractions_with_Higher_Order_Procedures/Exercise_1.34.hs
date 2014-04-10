@@ -12,4 +12,4 @@ f g = g 2
 main = do
   print $ f square
   print $ f (\ z -> z * (z + 1))
-  -- print $ f f -- compile error
+  print $ f f -- compile error
