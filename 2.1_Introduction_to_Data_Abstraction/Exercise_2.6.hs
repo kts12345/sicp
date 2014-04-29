@@ -18,4 +18,4 @@ two = (\f -> (\x -> f (f x))
 
 -- (f (f (f x))) + (f (f x))
 -- = (f (f (f (f (f x)))))
-add a b = (\f -> (\x -> 
+add a b = (\f -> (\x -> (a f).(b f)))
