@@ -14,8 +14,15 @@ one = (\f -> (\x -> f x))
 -- 2 = (\f -> (\x -> f (((\f -> (\x -> f x)) f) x)))
 -- 2 = (\f -> (\x -> f ((\x -> f x) x)))
 -- 2 = (\f -> (\x -> f (f x))
-two = (\f -> (\x -> f (f x))
+two = (\f -> (\x -> f (f x)))
 
 -- (f (f (f x))) + (f (f x))
 -- = (f (f (f (f (f x)))))
-add a b = (\f -> (\x -> (a f).(b f)))
+add a b = (\f -> (\x -> ((a f).(b f)) x))
+
+inc x = x + 1
+
+main = do
+  print $ one inc 0
+  print $ two inc 0
+  print $ (add one two) inc 0
